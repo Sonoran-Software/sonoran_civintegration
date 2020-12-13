@@ -21,6 +21,9 @@ local config = {
 
     -- allow players to use /refreshid which causes the next /showid to re-fetch from the CAD. Useful if the player swaps characters.
     ,allowPurge = true
+
+    -- if false, disables the built-in commands of this plugin so it can be used in custom code instead.
+    ,enableCommands = true
 }
 
 if config.enabled then

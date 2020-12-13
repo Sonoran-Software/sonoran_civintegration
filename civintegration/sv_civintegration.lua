@@ -86,57 +86,59 @@ if pluginConfig.enabled then
 
     exports('GetCharacters', GetCharacters)
 
-    RegisterCommand("showid", function(source, args, rawCommand)
-        local target = nil
-        local source = source
-        if args[1] == nil then
-            target = source
-        else
-            target = args[1]
-        end
-        GetCharacters(target, function(characters)
-            if characters == nil then
-                TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^1Error ^0] ", "No characters found."}})
+    if pluginConfig.enableCommands then
+        RegisterCommand("showid", function(source, args, rawCommand)
+            local target = nil
+            local source = source
+            if args[1] == nil then
+                target = source
             else
-                local char = characters[1]
-                local name = ("%s %s"):format(char.first, char.last)
-                local dob = char.dob
-                if char.img == "statics/images/blank_user.jpg" then
-                    char.img = "https://sonorancad.com/statics/images/blank_user.jpg"
+                target = args[1]
+            end
+            GetCharacters(target, function(characters)
+                if characters == nil then
+                    TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^1Error ^0] ", "No characters found."}})
+                else
+                    local char = characters[1]
+                    local name = ("%s %s"):format(char.first, char.last)
+                    local dob = char.dob
+                    if char.img == "statics/images/blank_user.jpg" then
+                        char.img = "https://sonorancad.com/statics/images/blank_user.jpg"
+                    end
+                TriggerClientEvent("pNotify:SendNotification", source, {
+                    text = ("<h3>ID Lookup</h3><img width=\"96px\" height=\"128px\" align=\"left\" src=\"%s\"></image><p><strong>Player ID:</strong> %s </p><p><strong>Name:</strong> %s </p><p><strong>Date of Birth:</strong> %s</p>"):format(char.img, target, name, dob),
+                    type = "success",
+                    layout = "bottomcenter",
+                    timeout = "10000"
+                })
                 end
-               TriggerClientEvent("pNotify:SendNotification", source, {
-                text = ("<h3>ID Lookup</h3><img width=\"96px\" height=\"128px\" align=\"left\" src=\"%s\"></image><p><strong>Player ID:</strong> %s </p><p><strong>Name:</strong> %s </p><p><strong>Date of Birth:</strong> %s</p>"):format(char.img, target, name, dob),
-                type = "success",
-                layout = "bottomcenter",
-                timeout = "10000"
-            })
-            end
-        end)
-    end)
-
-    if pluginConfig.allowCustomIds then
-        RegisterCommand("setid", function(source, args, rawCommand)
-            TriggerClientEvent("SonoranCAD::civintegration:SetCustomId", source)
-        end)
-    
-        RegisterCommand("resetid", function(source, args, rawCommand)
-            if CustomCharacterCache[source] ~= nil then
-                CustomCharacterCache[source] = nil
-                TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^2OK ^0] ", "Custom character removed."}})
-            end
+            end)
         end)
 
-        RegisterNetEvent("SonoranCAD::civintegration:SetCustomId")
-        AddEventHandler("SonoranCAD::civintegration:SetCustomId", function(id)
-            CustomCharacterCache[source] = {{ ['first'] = id.first, ['last'] = id.last, ['dob'] = id.dob, img = "https://sonorancad.com/statics/images/blank_user.jpg" }}
-        end)
-    end
+        if pluginConfig.allowCustomIds then
+            RegisterCommand("setid", function(source, args, rawCommand)
+                TriggerClientEvent("SonoranCAD::civintegration:SetCustomId", source)
+            end)
+        
+            RegisterCommand("resetid", function(source, args, rawCommand)
+                if CustomCharacterCache[source] ~= nil then
+                    CustomCharacterCache[source] = nil
+                    TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^2OK ^0] ", "Custom character removed."}})
+                end
+            end)
 
-    if pluginConfig.allowPurge then
-        RegisterCommand("refreshid", function(source, args, rawCommand)
-            CharacterCacheTimers[source] = 0
-            TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^2OK ^0] ", "Reset character list. Use /showid again."}})
-        end)
+            RegisterNetEvent("SonoranCAD::civintegration:SetCustomId")
+            AddEventHandler("SonoranCAD::civintegration:SetCustomId", function(id)
+                CustomCharacterCache[source] = {{ ['first'] = id.first, ['last'] = id.last, ['dob'] = id.dob, img = "https://sonorancad.com/statics/images/blank_user.jpg" }}
+            end)
+        end
+
+        if pluginConfig.allowPurge then
+            RegisterCommand("refreshid", function(source, args, rawCommand)
+                CharacterCacheTimers[source] = 0
+                TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^2OK ^0] ", "Reset character list. Use /showid again."}})
+            end)
+        end
     end
 
     
