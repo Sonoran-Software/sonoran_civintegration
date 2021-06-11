@@ -24,6 +24,9 @@ local config = {
 
     -- if false, disables the built-in commands of this plugin so it can be used in custom code instead.
     ,enableCommands = true
+
+    -- if true, you must have the id_card_ui resource started in your server in order for it to work
+    ,enableCardUi = false
 }
 
 if config.enabled then
