@@ -105,7 +105,7 @@ if pluginConfig.enabled then
                     if char.img == "statics/images/blank_user.jpg" then
                         char.img = "https://sonorancad.com/statics/images/blank_user.jpg"
                     end
-                    if pluginConfig.enableCardUi then
+                    if pluginConfig.enableIDCardUI then
                         TriggerClientEvent("SonoranCAD::civint:DisplayID", source, char.img, target, name, dob)
                     else
                         TriggerClientEvent("pNotify:SendNotification", source, {

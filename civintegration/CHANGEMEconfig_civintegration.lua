@@ -26,7 +26,7 @@ local config = {
     ,enableCommands = true
 
     -- if true, you must have the id_card_ui resource started in your server in order for it to work
-    ,enableCardUi = false
+    ,enableIDCardUI = false
 }
 
 if config.enabled then
