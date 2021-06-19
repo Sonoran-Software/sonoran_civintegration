@@ -8,7 +8,7 @@
 ]]
 local config = {
     enabled = false,
-    configVersion = "1.0",
+    configVersion = "1.1",
     pluginName = "civintegration", -- name your plugin here
     pluginAuthor = "SonoranCAD", -- author
     requiresPlugins = {} -- required plugins for this plugin to work, separated by commas
