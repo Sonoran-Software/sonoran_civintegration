@@ -25,7 +25,7 @@ local config = {
     -- if false, disables the built-in commands of this plugin so it can be used in custom code instead.
     ,enableCommands = true
 
-    -- if true, you must have the id_card_ui resource started in your server in order for it to work
+    -- if true, you must have the sonoran_idcard resource started in your server in order for it to work
     ,enableIDCardUI = false
 }
 
