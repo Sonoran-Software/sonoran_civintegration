@@ -96,7 +96,7 @@ if pluginConfig.enabled then
                 target = args[1]
             end
             GetCharacters(target, function(characters)
-                if characters == nil then
+                if characters == nil or #characters < 1 then
                     TriggerClientEvent("chat:addMessage", source, {args = {"^0[ ^1Error ^0] ", "No characters found."}})
                 else
                     local char = characters[1]
