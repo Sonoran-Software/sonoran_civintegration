@@ -31,8 +31,8 @@ if pluginConfig.enabled then
             return
         end
         local payload = { ['apiId'] = apiId }
-        performApiRequest({payload}, "GET_CHARACTERS", function(result)
-            if result ~= nil then
+        performApiRequest({payload}, "GET_CHARACTERS", function(result, error)
+            if result ~= nil and error ~= 404 then
                 local characters = {}
                 for _, records in pairs(json.decode(result)) do
                     local charData = {}
@@ -123,7 +123,7 @@ if pluginConfig.enabled then
             RegisterCommand("setid", function(source, args, rawCommand)
                 TriggerClientEvent("SonoranCAD::civintegration:SetCustomId", source)
             end)
-        
+
             RegisterCommand("resetid", function(source, args, rawCommand)
                 if CustomCharacterCache[source] ~= nil then
                     CustomCharacterCache[source] = nil
@@ -145,5 +145,5 @@ if pluginConfig.enabled then
         end
     end
 
-    
+
 end
